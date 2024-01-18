@@ -1,4 +1,7 @@
 const express = require("express");
-const Router = express.Router();
+const { createToken } = require("../controllers/smsController");
+const router = express.Router();
 
-module.exports = Router;
+router.post("/createtoken", createToken);
+
+module.exports = router;
