@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const smsRouter = require("./routes/smsRoute");
+const accessToken = require("./middlewares/accesToken");
 
 //Third-Party Middleware
 app.use(express.json());

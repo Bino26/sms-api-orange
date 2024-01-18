@@ -1,34 +1,11 @@
 const axios = require("axios");
 
-//create  token
-const createToken = async (req, res) => {
-  try {
-    const response = await axios.post(
-      "https://api.orange.com/oauth/v3/token",
-      {
-        grant_type: "client_credentials",
-      },
-      {
-        headers: {
-          Authorization: process.env.AUTH_HEADER,
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-
-    return response.data.access_token;
-  } catch (error) {
-    res.status(400).json(error.message);
-  }
-};
-
 //Send SMS
 
 const sendSMS = async (req, res) => {
   try {
     const { recipient, message } = req.body;
-    const token = await createToken();
+    const access_token = req.accessToken;
 
     const devNumber = process.env.DEV_NUMBER;
 
@@ -45,7 +22,7 @@ const sendSMS = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${access_token}`,
           Accept: "application/json",
         },
       }
@@ -60,4 +37,24 @@ const sendSMS = async (req, res) => {
   }
 };
 
-module.exports = { createToken, sendSMS };
+//Check your sold SMS and the expiry date
+
+const soldeSMS = async (req, res) => {
+  try {
+    const access_token = req.accessToken;
+    const response = await axios.get(
+      "https://api.orange.com/sms/admin/v1/contracts",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          //   Accept: "application/json",
+        },
+      }
+    );
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+};
+
+module.exports = { sendSMS, soldeSMS };
