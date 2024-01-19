@@ -29,6 +29,7 @@ const sendSMS = async (req, res) => {
     );
 
     res.status(200).json({
+      success: true,
       message: `SMS sent successfuly to ${recipient}`,
       data: response.data,
     });
@@ -47,11 +48,14 @@ const soldeSMS = async (req, res) => {
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
-          //   Accept: "application/json",
         },
       }
     );
-    res.status(200).json(response);
+    res.status(200).json({
+      success: true,
+      SMS_Solde: `${response.data[0].availableUnits} SMS `,
+      Expiration_Date: response.data[0].expirationDate,
+    });
   } catch (error) {
     res.status(400).json(error.message);
   }
