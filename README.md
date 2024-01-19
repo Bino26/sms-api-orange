@@ -15,10 +15,31 @@ Axios is used for making HTTP requests to the Orange API.
 3. Send SMS messages to recipients with a few lines of code.
 
 ## Getting Started
-1. Clone the repository: `git clone https://github.com/Bino26/sms-api-orange.git`
-2. Follow the documentation in the `docs` folder for API integration details.
-3. Ensure you have the necessary dependencies and credentials.
 
+1. Clone the repository:
+    ```bash
+     git clone https://github.com/Bino26/sms-api-orange.git
+    ```
+
+2. Install the dependencies :
+
+    ```bash
+    npm install
+    ```
+
+ To run this project, you will need to create an .env file and add the following environment variables to your .env file .
+ 
+3. Copy the `.env.example` file and rename it to `.env` and replace characters by your own credentials:
+     ```bash
+    cp .env.example .env
+    ```
+4. Launch the server :
+
+    ```bash
+    npm start 
+    ```
+5. Obtain API credentials from [Orange Developer portal](https://developer.orange.com/apis/sms/overview)
+      
 ## Contributing
 We welcome contributions! If you find a bug or have a feature request, please open an issue. Feel free to fork the repository and submit pull requests.
 
