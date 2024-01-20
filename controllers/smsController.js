@@ -34,7 +34,19 @@ const sendSMS = async (req, res) => {
       data: response.data,
     });
   } catch (error) {
-    res.status(400).json(error.message);
+    if (response.status === 401) {
+      res.status(401).json({
+        code: 42,
+        message: "Expired credentials",
+        description:
+          "The requested service needs credentials, and the ones provided were out-of-date.",
+      });
+    } else {
+      res.status(400).json({
+        message: "Bad Request",
+        description: error.message,
+      });
+    }
   }
 };
 
@@ -51,13 +63,26 @@ const soldeSMS = async (req, res) => {
         },
       }
     );
+
     res.status(200).json({
       success: true,
       SMS_Solde: `${response.data[0].availableUnits} SMS `,
       Expiration_Date: response.data[0].expirationDate,
     });
   } catch (error) {
-    res.status(400).json(error.message);
+    if (response.status == 401) {
+      res.status(401).json({
+        code: 42,
+        message: "Expired credentials",
+        description:
+          "The requested service needs credentials, and the ones provided were out-of-date.",
+      });
+    } else {
+      res.status(400).json({
+        message: "Bad Request",
+        description: error.message,
+      });
+    }
   }
 };
 
